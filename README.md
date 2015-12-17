@@ -7,9 +7,13 @@ mt6592 kernel source
 
 =========================================
 export ARCH=arm
+
 export ARCH_MTK_PLATFORM=mt6592
+
 make clean
+
 make q510_qumo_defconfig
+
 ./build.sh
 
 =========================================
