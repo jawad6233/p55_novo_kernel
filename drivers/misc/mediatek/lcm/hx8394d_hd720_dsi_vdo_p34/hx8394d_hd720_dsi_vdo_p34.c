@@ -33,6 +33,7 @@
 *
 *****************************************************************************/
 
+
 #ifndef BUILD_LK
 #include <linux/string.h>
 #endif
@@ -75,14 +76,14 @@ static LCM_UTIL_FUNCS lcm_util = {0};
 #define read_reg(cmd)											lcm_util.dsi_dcs_read_lcm_reg(cmd)
 #define read_reg_v2(cmd, buffer, buffer_size)
 
-static void lcm_set_util_funcs_(LCM_UTIL_FUNCS *utils)
+static void lcm_set_util_funcs(const LCM_UTIL_FUNCS * util)
 {
-  memcpy_(&g_LCM_UTIL_FUNCS, utils, 0x50);
-}
+  memcpy(&lcm_util, util, sizeof(LCM_UTIL_FUNCS));
+};
 
-static void lcm_get_params_(LCM_PARAMS *params)
+static void lcm_get_params(LCM_PARAMS * params)
 {
-  _memzero_(params, 0x220);
+  memset(params, 0, sizeof(LCM_PARAMS));
   params->type = 2;
   params->dsi.data_format.format = 2;
   params->dsi.PS = 2;
@@ -102,52 +103,62 @@ static void lcm_get_params_(LCM_PARAMS *params)
   params->dsi.ssc_disable = 1;
 }
 
-static void lcm_init_()
+static void lcm_init(void)
 {
-  int data_array[16]; // [sp+0h] [bp-64h]
+  int data_array[16];
 
-  set_reset_pin(1);
-  mdelay(5);
-  set_reset_pin(0);
-  mdelay(10);
-  set_reset_pin(1);
-  mdelay(180);
+  SET_RESET_PIN(1);
+  MDELAY(5);
+
+  SET_RESET_PIN(0);
+  MDELAY(10);
+
+  SET_RESET_PIN(1);
+  MDELAY(180);
+
   data_array[0] = 0x43902;
   data_array[1] = 0x9483FFB9;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(5);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(5);
+
   data_array[0] = 0x33902;
   data_array[1] = 0x8373BA;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[0] = 0x103902;
   data_array[1] = 0x12126AB1;
   data_array[2] = 0xF111E424;
   data_array[3] = 0x239DE480;
   data_array[4] = 0x58D2C080;
-  dsi_set_cmdq(data_array, 5, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 5, 1);
+  MDELAY(1);
+
   data_array[0] = 0xC3902;
   data_array[1] = 0x106400B2;
   data_array[2] = 0x81C1207;
   data_array[3] = 0x4D1C08;
-  dsi_set_cmdq(data_array, 4, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 4, 1);
+  MDELAY(1);
+
   data_array[0] = 0xD3902;
   data_array[1] = 0x3FF00B4;
   data_array[2] = 0x35A035A;
   data_array[3] = 0x16A015A;
   data_array[4] = 0x6A;
-  dsi_set_cmdq(data_array, 5, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 5, 1);
+  MDELAY(1);
+
   data_array[1] = 0x55D2;
   data_array[0] = 0x23902;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[0] = 0x43902;
   data_array[1] = 0x10E41BF;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[0] = 0x263902;
   data_array[1] = 0x600D3;
   data_array[2] = 0x81A40;
@@ -159,8 +170,9 @@ static void lcm_init_()
   data_array[8] = 0x8070710;
   data_array[10] = 0x100;
   data_array[9] = 0xA000000;
-  dsi_set_cmdq(data_array, 11, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 11, 1);
+  MDELAY(1);
+
   data_array[2] = 0x1B1A1A18;
   data_array[4] = 0x2010007;
   data_array[6] = 0x18181818;
@@ -174,8 +186,9 @@ static void lcm_init_()
   data_array[10] = 0x18181818;
   data_array[9] = 0x18181823;
   data_array[11] = 0x18181818;
-  dsi_set_cmdq(data_array, 13, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 13, 1);
+  MDELAY(1);
+
   data_array[2] = 0x1B1A1A19;
   data_array[4] = 0x5060700;
   data_array[6] = 0x18181818;
@@ -189,8 +202,9 @@ static void lcm_init_()
   data_array[10] = 0x18181818;
   data_array[9] = 0x18181820;
   data_array[11] = 0x18181818;
-  dsi_set_cmdq(data_array, 13, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 13, 1);
+  MDELAY(1);
+
   data_array[0] = 0x2C3902;
   data_array[1] = 0x171204E0;
   data_array[2] = 0x213E3330;
@@ -203,69 +217,78 @@ static void lcm_init_()
   data_array[9] = 0x110D170C;
   data_array[10] = 0x8131113;
   data_array[11] = 0x1A1612;
-  dsi_set_cmdq(data_array, 12, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 12, 1);
+  MDELAY(1);
+
   data_array[0] = 0x33902;
   data_array[1] = 0x6565B6;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[1] = 0x9CC;
   data_array[0] = 0x23902;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[0] = 0x53902;
   data_array[1] = 0x40C000C7;
   data_array[2] = 0xC0;
-  dsi_set_cmdq(data_array, 3, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 3, 1);
+  MDELAY(1);
+
   data_array[1] = 0x87DF;
   data_array[0] = 0x23902;
-  dsi_set_cmdq(data_array, 2, 1);
-  mdelay(1);
+  dsi_set_cmdq(&data_array, 2, 1);
+  MDELAY(1);
+
   data_array[0] = 0x110500;
-  dsi_set_cmdq(data_array, 1, 1);
-  mdelay(150);
+  dsi_set_cmdq(&data_array, 1, 1);
+  MDELAY(150);
+
   data_array[0] = 0x290500;
-  dsi_set_cmdq(data_array, 1, 1);
-  mdelay(20);
+  dsi_set_cmdq(&data_array, 1, 1);
+  MDELAY(20);
 }
 
-static void lcm_suspend_()
+static void lcm_suspend(void)
 {
-  int buff[16]; // [sp+0h] [bp-54h]
+  int buff[16];
 
   buff[0] = 0x280500;
-  dsi_set_cmdq(buff);
-  mdelay(10);
+  dsi_set_cmdq(&buff, 1, 1);
+  MDELAY(10);
+  
   buff[0] = 0x100500;
-  dsi_set_cmdq(buff);
-  mdelay(120);
-  set_reset_pin(1);
-  mdelay(10);
-  set_reset_pin(0);
-  mdelay(10);
-  set_reset_pin(1);
-  mdelay(120);
+  dsi_set_cmdq(&buff, 1, 1);
+  MDELAY(120);
+  
+  SET_RESET_PIN(1);
+  MDELAY(10);
+  
+  SET_RESET_PIN(0);
+  MDELAY(10);
+  
+  SET_RESET_PIN(1);
+  MDELAY(120);
 }
 
-static void lcm_resume_()
+static void lcm_resume(void)
 {
-  lcm_init_();
-  printk("[KERNEL]---cmd---hx8394a_hd720_dsi_vdo_tianma----%s------\n", 0xC0768474);// ROM:C0768474 aLcmResume      DCB "lcm_resume",0
+  lcm_init();
 }
 
-static unsigned int lcm_compare_id_()
+static unsigned int lcm_compare_id()
 {
   return 1;
 }
 
+/*
 static unsigned int lcm_esd_check_()
 {
   int result; // r0
   unsigned __int8 buff_3; // [sp+2h] [bp-2Ah]
   char buff_2[5]; // [sp+3h] [bp-29h]
   int buff[4]; // [sp+8h] [bp-24h]
-
   buff[0] = 0x43902;
   buff[1] = 0x9483FFB9;
   dsi_set_cmdq(buff, 2, 1);
@@ -288,15 +311,13 @@ static unsigned int lcm_esd_check_()
     result = 1;
   return result;
 }
-
 static unsigned int lcm_esd_recover_()
 {
   printk("miles---> [FUNC]:%s [LINE]:%d\n", "lcm_esd_recover", 725);
   lcm_resume_();
   return 1;
 }
-
-
+*/
 // ---------------------------------------------------------------------------
 //  Get LCM Driver Hooks
 // ---------------------------------------------------------------------------
@@ -311,4 +332,3 @@ LCM_DRIVER hx8394d_hd720_dsi_vdo_p34_lcm_drv =
 	.resume         = lcm_resume,
 	.compare_id     = lcm_compare_id,
 };
-
