@@ -18,22 +18,14 @@
 #define LCD_DEBUG(fmt)  printk(fmt)
 #endif
 
-extern LCM_DRIVER otm1283a_jmo_lcm_drv; // add by lewonchik 2015
-extern LCM_DRIVER otm1283a_hd_pngd_lcm_drv; // add by lewonchik 2015
-extern LCM_DRIVER otm1283a_hd_dsi_lcm_drv; // add by lewonchik 2015
+extern LCM_DRIVER hx8394d_hd720_dsi_vdo_p34_lcm_drv; // add by Shivom007
 
 LCM_DRIVER* lcm_driver_list[] = 
 { 
 
-#if defined(OTM1283A_JMO)
-	&otm1283a_jmo_lcm_drv,
-#endif
-#if defined(OTM1283A_HD_PNGD)
-	&otm1283a_hd_pngd_lcm_drv,
-#endif
-#if defined(OTM1283A_HD_DSI)
-	&otm1283a_hd_dsi_lcm_drv,
-#endif
+#if defined(HX8394D_HD720_DSI_VDO_P34)
+        &hx8394d_hd720_dsi_vdo_p34_lcm_drv,
+#endif 
 
 };
 
