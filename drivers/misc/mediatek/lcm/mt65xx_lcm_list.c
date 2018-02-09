@@ -18,21 +18,13 @@
 #define LCD_DEBUG(fmt)  printk(fmt)
 #endif
 
-extern LCM_DRIVER otm1283a_jmo_lcm_drv;
-extern LCM_DRIVER otm1283a_hd_pngd_lcm_drv;
-extern LCM_DRIVER otm1283a_hd_dsi_lcm_drv;
+extern LCM_DRIVER hx8394d_hd720_dsi_vdo_p34_lcm_drv;
 
 LCM_DRIVER* lcm_driver_list[] = 
 { 
-#if defined(OTM1283A_JMO)
-	&otm1283a_jmo_lcm_drv,
-#endif
-#if defined(OTM1283A_HD_PNGD)
-	&otm1283a_hd_pngd_lcm_drv,
-#endif
-#if defined(OTM1283A_HD_DSI)
-	&otm1283a_hd_dsi_lcm_drv,
-#endif
+#if defined(HX8394D_HD720_DSI_VDO_P34)
+	&hx8394d_hd720_dsi_vdo_p34_lcm_drv,
+#endif	
 };
 
 #define LCM_COMPILE_ASSERT(condition) LCM_COMPILE_ASSERT_X(condition, __LINE__)
@@ -49,7 +41,7 @@ static unsigned char lcd_id_pins_value = 0xFF;
 
 /******************************************************************************
 Function:       which_lcd_module_triple
-  Description:    read LCD ID PIN status,could identify three status:high¡¢low¡¢float
+  Description:    read LCD ID PIN status,could identify three status:highÂ¡Â¢lowÂ¡Â¢float
   Input:           none
   Output:         none
   Return:         LCD ID1|ID0 value
