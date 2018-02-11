@@ -277,13 +277,13 @@ static void lcm_resume(void)
   lcm_init();
 }
 
-static unsigned int lcm_compare_id()
+static unsigned int lcm_compare_id(void)
 {
   return 1;
 }
 
-/*
-static unsigned int lcm_esd_check_()
+
+static unsigned int lcm_esd_check_(void)
 {
   int result; // r0
   unsigned __int8 buff_3; // [sp+2h] [bp-2Ah]
@@ -311,13 +311,13 @@ static unsigned int lcm_esd_check_()
     result = 1;
   return result;
 }
-static unsigned int lcm_esd_recover_()
+static unsigned int lcm_esd_recover_(void)
 {
-  printk("miles---> [FUNC]:%s [LINE]:%d\n", "lcm_esd_recover", 725);
+  
   lcm_resume_();
   return 1;
 }
-*/
+
 // ---------------------------------------------------------------------------
 //  Get LCM Driver Hooks
 // ---------------------------------------------------------------------------
@@ -331,4 +331,6 @@ LCM_DRIVER hx8394d_hd720_dsi_vdo_p34_lcm_drv =
 	.suspend        = lcm_suspend,
 	.resume         = lcm_resume,
 	.compare_id     = lcm_compare_id,
+	.esd_check   	= lcm_esd_check,
+        .esd_recover	= lcm_esd_recover,
 };
