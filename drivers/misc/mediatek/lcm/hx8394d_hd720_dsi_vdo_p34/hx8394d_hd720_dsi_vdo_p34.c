@@ -282,7 +282,7 @@ static unsigned int lcm_compare_id(void)
   return 1;
 }
 
-
+/*
 static unsigned int lcm_esd_check(void)
 {
   int result; // r0
@@ -311,6 +311,8 @@ static unsigned int lcm_esd_check(void)
     result = 1;
   return result;
 }
+*/
+
 static unsigned int lcm_esd_recover(void)
 {
   
