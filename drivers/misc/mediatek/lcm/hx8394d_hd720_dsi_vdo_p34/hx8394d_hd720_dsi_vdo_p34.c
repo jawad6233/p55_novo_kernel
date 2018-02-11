@@ -333,6 +333,6 @@ LCM_DRIVER hx8394d_hd720_dsi_vdo_p34_lcm_drv =
 	.suspend        = lcm_suspend,
 	.resume         = lcm_resume,
 	.compare_id     = lcm_compare_id,
-	.esd_check   	= lcm_esd_check,
+	//.esd_check   	= lcm_esd_check,
         .esd_recover	= lcm_esd_recover,
 };
